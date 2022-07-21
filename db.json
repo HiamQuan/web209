@@ -1,0 +1,63 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "SamSung Galaxy S22 Ultra",
+            "describe": " Được cho ra mắt vào tháng 02/2022, Samsung Galaxy S22 Ultra 5G gây sốt trong cộng đồng công nghệ bởi hiệu năng mạnh mẽ, thiết kế đẳng cấp sang trọng cùng nhiều tiện ích do bút S Pen mang lại.",
+            "detail": " Màn hình: Dynamic AMOLED 2X6.8 Quad HD+ (2K+), Hệ điều hành: Android 12, Chip: Snapdragon 8 Gen 1 8 nhân,RAM:8GB",
+            "img": "",
+            "price": 30990000,
+            "salePrice": 25090000,
+            "categoryId": "1"
+        },
+        {
+            "id": 2,
+            "name": "SamSung Galaxy A51 Official",
+            "describe": " Được cho ra mắt vào tháng 02/2022, Samsung Galaxy S22 Ultra 5G gây sốt trong cộng đồng công nghệ bởi hiệu năng mạnh mẽ, thiết kế đẳng cấp sang trọng cùng nhiều tiện ích do bút S Pen mang lại.",
+            "detail": " Màn hình: Dynamic AMOLED 2X6.8 Quad HD+ (2K+), Hệ điều hành: Android 12, Chip: Snapdragon 8 Gen 1 8 nhân,RAM:8GB",
+            "img": "",
+            "price": 2990000,
+            "salePrice": 15090000,
+            "categoryId": "1"
+        },
+        {
+            "id": 3,
+            "name": "OPPO Reno6 5G",
+            "describe": " Được cho ra mắt vào tháng 02/2022, Samsung Galaxy S22 Ultra 5G gây sốt trong cộng đồng công nghệ bởi hiệu năng mạnh mẽ, thiết kế đẳng cấp sang trọng cùng nhiều tiện ích do bút S Pen mang lại.",
+            "detail": " Màn hình: Dynamic AMOLED 2X6.8 Quad HD+ (2K+), Hệ điều hành: Android 12, Chip: Snapdragon 8 Gen 1 8 nhân,RAM:8GB",
+            "img": "",
+            "price": 30990000,
+            "salePrice": 25090000,
+            "categoryId": "1"
+        },
+        {
+            "id": 4,
+            "name": "SamSung Galaxy S22 Ultra",
+            "describe": " Được cho ra mắt vào tháng 02/2022, Samsung Galaxy S22 Ultra 5G gây sốt trong cộng đồng công nghệ bởi hiệu năng mạnh mẽ, thiết kế đẳng cấp sang trọng cùng nhiều tiện ích do bút S Pen mang lại.",
+            "detail": " Màn hình: Dynamic AMOLED 2X6.8 Quad HD+ (2K+), Hệ điều hành: Android 12, Chip: Snapdragon 8 Gen 1 8 nhân,RAM:8GB",
+            "img": "",
+            "price": 40090000,
+            "salePrice": 35090000,
+            "categoryId": "1"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "Điện thoại"
+        },
+        {
+            "id": 2,
+            "name": "Laptop"
+        },
+        {
+            "id": 3,
+            "name": "Máy tính bảng"
+        },
+        {
+            "id": 4,
+            "name": "Âm thanh"
+        }
+    ],
+    "users": []
+}

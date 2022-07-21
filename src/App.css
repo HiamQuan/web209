@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-size: 14px;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+.menu {
+    display: flex;
+}
+.menu li {
+    display: flex;
+    align-items: center;
+    max-width: 110px;
+    margin: 0 1em;
+}
+a {
+    color: white;
+}

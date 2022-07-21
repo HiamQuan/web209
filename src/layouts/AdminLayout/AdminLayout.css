@@ -1,0 +1,10 @@
+.ant-menu-item {
+    max-width: 70%;
+    padding: 0.5em 0em;
+    margin-left: 1em;
+}
+
+.ant-menu-title-content {
+    margin-left: 0.5em;
+    font-weight: 500;
+}
