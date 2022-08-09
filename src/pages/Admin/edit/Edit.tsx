@@ -1,7 +1,9 @@
 import { Button, Form, Input, message, Select, Space } from "antd";
 import { Typography } from "antd";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { read } from "../../../api/products";
 import { upload } from "../../../api/uploadImage";
 import UploadImage from "../../../components/UploadImage";
 import { ProductType } from "../../../type/product";
@@ -12,13 +14,16 @@ const { TextArea } = Input;
 
 type Props = {
     categories: any[];
-    onAdd: (product: ProductType) => void;
+    onEdit: (product: ProductType, id: number) => void;
 };
-const AddProducts = (props: Props) => {
+
+const EditProducts = (props: Props) => {
+    const [product, setProduct] = useState<ProductType>();
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [previewImage, setPreviewImage] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-
-    const navigate = useNavigate();
+    const [form] = Form.useForm();
 
     const handleChangeImage = (event: any) => {
         const file = event.target.files[0];
@@ -27,27 +32,46 @@ const AddProducts = (props: Props) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setPreviewImage(reader.result);
+            setPreviewImage(reader.result as string);
         };
     };
+
+    const uploadImage = async (base64Image: string) => {
+        try {
+            const res = await upload(base64Image);
+            const data = res.data;
+            setImageUrl(data.url);
+        } catch (err) {}
+    };
+
+    useEffect(() => {
+        const getProduct = async () => {
+            const { data } = await read(id);
+            setProduct(data);
+            form.setFieldsValue(data);
+        };
+        getProduct();
+    }, []);
     return (
         <div>
             <h1 className="tw-text-2xl tw-text-gray-500 tw-font-bold ">Thêm sản phẩm mới</h1>
 
             <Form
                 className="add-form tw-mt-5 tw-grid tw-grid-cols-3 tw-gap-11 tw-px-10 tw-bg-gray-50 tw-py-10"
+                form={form}
                 onFinish={(values) => {
-                    props.onAdd(values);
-                    upload(previewImage);
+                    props.onEdit(values, id);
+                    uploadImage(previewImage);
                     navigate("/admin");
-                    message.success("Thêm thành công");
+                    message.success("Sửa thành công");
                 }}
                 name="addForm"
                 onFinishFailed={(e) => console.log("failed")}
                 layout="vertical"
+                initialValues={product}
             >
-                <Form.Item className="upload-form" label="" name="img">
-                    <UploadImage previewImage="" />
+                <Form.Item className="upload-form" name="img">
+                    <UploadImage previewImage={product?.img} />
                 </Form.Item>
                 <div className="product-form tw-col-span-2">
                     <div className=" tw-text-sky-900 tw-text-xl tw-font-normal tw-pb-6 tw-border-b-2">
@@ -88,7 +112,7 @@ const AddProducts = (props: Props) => {
                         name="category"
                         rules={[{ required: true, message: "Please choose one of these!" }]}
                     >
-                        <Select size="large" style={{ width: 395 }} allowClear>
+                        <Select defaultValue="Điện thoại" size="large" style={{ width: 395 }} allowClear>
                             {props.categories.map((item) => (
                                 <Option value={item.id}>{item.name}</Option>
                             ))}
@@ -99,7 +123,7 @@ const AddProducts = (props: Props) => {
                         className="describe"
                         label="Đặc điểm nổi bật"
                         name="describe"
-                        rules={[{ required: true, message: "Please input describe!" }]}
+                        rules={[{ required: true, message: "Please input name!" }]}
                     >
                         <TextArea showCount rows={6} maxLength={1000}></TextArea>
                     </Form.Item>
@@ -108,7 +132,7 @@ const AddProducts = (props: Props) => {
                         className="detail"
                         label="Mô tả chi tiết"
                         name="detail"
-                        rules={[{ required: true, message: "Please input detail!" }]}
+                        rules={[{ required: true, message: "Please input name!" }]}
                     >
                         <TextArea showCount rows={6} maxLength={1000}></TextArea>
                     </Form.Item>
@@ -123,4 +147,4 @@ const AddProducts = (props: Props) => {
     );
 };
 
-export default AddProducts;
+export default EditProducts;

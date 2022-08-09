@@ -1,0 +1,28 @@
+.product-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.title {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 0.5em;
+}
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.product-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2em;
+    margin: 0 auto;
+}
+.section-title {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-bottom: 0.9em;
+    color: rgb(71, 70, 70);
+}

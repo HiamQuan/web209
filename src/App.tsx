@@ -8,9 +8,14 @@ import "./App.css";
 import Index from "./pages/Admin/index/Index";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { list, remove, update } from "./api/products";
+import { create, list, remove, update } from "./api/products";
 import { ProductType } from "./type/product";
 import AddProducts from "./pages/Admin/add/Add";
+import EditProducts from "./pages/Admin/edit/Edit";
+import ProductDetailPage from "./pages/Website/product-detail/ProductDetailPage";
+import CartPage from "./pages/Website/cart-page/CartPage";
+import FormSign from "./components/website/form/Form";
+import PrivateRouter from "./components/PrivateRouter";
 
 function App() {
     const [products, setProducts] = useState<ProductType[]>([]);
@@ -30,20 +35,20 @@ function App() {
     }, []);
 
     // Add Product
-    // const onHandleAdd = async (product: any) => {
-    //     const { data } = await create(product);
-    //     setProducts([...products, data]);
-    // };
+    const onHandleAdd = async (product: any) => {
+        const { data } = await create(product);
+        setProducts([...products, data]);
+    };
     const onHandleRemove = async (id: number) => {
         remove(id);
         // rerender
         setProducts(products.filter((item) => item.id !== id));
         toast.success("Xóa thành công");
     };
-    const onHandleUpdate = async (product: ProductType) => {
+    const onHandleUpdate = async (product: ProductType, id: number) => {
         try {
             // api
-            const { data } = await update(product);
+            const { data } = await update(product, id);
             // reREnder
             setProducts(products.map((item) => (item.id === data._id ? product : item)));
         } catch (error) {}
@@ -53,12 +58,24 @@ function App() {
         <Routes>
             <Route path="/" element={<WebsiteLayout />}>
                 <Route index element={<Home />} />
+                <Route path="product/:id" element={<ProductDetailPage />} />
+                <Route path="cart" element={<CartPage />} />
             </Route>
 
-            <Route path="admin" element={<AdminLayout />}>
+            <Route
+                path="admin"
+                element={
+                    <PrivateRouter>
+                        <AdminLayout />
+                    </PrivateRouter>
+                }
+            >
                 <Route index element={<Index products={products} />} />
-                <Route path="add" element={<AddProducts categories={categories} />} />
+                <Route path="add" element={<AddProducts categories={categories} onAdd={onHandleAdd} />} />
+                <Route path=":id/edit" element={<EditProducts categories={categories} onEdit={onHandleUpdate} />} />
             </Route>
+            <Route path="/signin" element={<FormSign />} />
+            <Route path="/signup" element={<FormSign />} />
         </Routes>
     );
 }

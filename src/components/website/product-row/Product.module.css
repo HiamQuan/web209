@@ -1,0 +1,39 @@
+.product-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0 3em;
+    gap: 4em;
+}
+.section-mobile {
+    margin-top: 5em;
+}
+.section-title {
+    font-size: 1.8em;
+    font-weight: 500;
+    margin-bottom: 0.9em;
+    padding-left: 11em;
+    color: rgb(71, 70, 70);
+}
+.product-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+}
+.title {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 0.5em;
+}
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.textService {
+    background-color: rgba(149, 148, 148, 0.262);
+    padding: 5px;
+    border-radius: 5px;
+    color: gray;
+    font-weight: 500;
+}

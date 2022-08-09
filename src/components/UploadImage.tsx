@@ -6,19 +6,22 @@ import { AddIcon } from "../assets/image/Frame-1";
 
 const { TextArea } = Input;
 
-const UploadImage = () => {
+type Props = {
+    previewImage: string;
+};
+const UploadImage = (props: Props) => {
     const [base64Image, setBase64Image] = React.useState("");
-    const [uploadedImage, setUploadedImage] = React.useState("");
+    const [uploadedImage, setUploadedImage] = React.useState(props.previewImage ? props.previewImage : "");
 
+    console.log(props.previewImage);
     const handleChangeImage = (event: any) => {
         const file = event.target.files[0];
         // previewFile(file)
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setUploadedImage(reader.result);
+            setUploadedImage(reader.result as string);
         };
-        console.log(uploadedImage);
     };
 
     const uploadImage = async (base64Image: string) => {
@@ -47,8 +50,9 @@ const UploadImage = () => {
                     <input
                         type="file"
                         accept="image/png, image/jpg, image/jpeg, image/gif"
-                        name="image"
+                        name="img"
                         onChange={handleChangeImage}
+                        hidden
                     />
                 </UploadIcon>
 
