@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
 import { signup, signin } from "../../../api/auth";
 
 export const signIn = createAsyncThunk("/signin", async (user: any) => {
@@ -31,6 +30,7 @@ const formSlice = createSlice({
     },
     reducers: {
         signout: (state: any, action: any) => {
+            console.log("signout-------------------------------------------");
             state.accessToken = "";
             state.user.id = null;
             state.user.email = "";

@@ -11,39 +11,56 @@ import { useDispatch, useSelector } from "react-redux";
 import { AutoComplete, Button } from "antd";
 import formSlice from "./form/FormSlice";
 import axios from "axios";
+import { ProductType } from "../../type/product";
+import { Slice } from "@reduxjs/toolkit";
 
 library.add(fas, far);
-const mockVal = (str: string, repeat = 1) => ({
-    value: str.repeat(repeat),
+
+const mockVal = (data: ProductType) => ({
+    value: (
+        <Link to={`/product/${data.id}`} className="tw-flex tw-items-center tw-gap-5">
+            <div className="tw-w-12">
+                <img src={data.img} className="img-fluid" />
+            </div>
+            <div className="tw-text-black">{data.name}</div>
+        </Link>
+    ),
 });
 
 const Header = () => {
-    const [value, setValue] = useState("");
-    const [options, setOptions] = useState<{ value: string }[]>([]);
-    const user = useSelector((state: any) => state.auth.user);
-    const onSearch = (searchText: string) => {
-        const getProduct = async () => {
-            const { data } = await axios.get(`http://localhost:3001/product?name_like=${searchText}`);
-            !searchText ? [] : mockVal(data);
-        };
-        getProduct();
-    };
-
-    const onSelect = (data: string) => {
-        console.log("onSelect", data);
-    };
-
-    const onChange = (data: string) => {
-        setValue(data);
-    };
-
+    const [value, setValue] = useState<string>("");
+    const [options, setOptions] = useState<any>([]);
+    const [products, setProducts] = useState<ProductType[]>([]);
+    const productStore = useSelector((state: any) => state.product.product);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const user = useSelector((state: any) => state.auth.user);
+
+    const onSearch = (searchText: string) => {
+        setOptions(!searchText ? [] : products.map((item) => mockVal(item)));
+    };
+
+    const onChange = (searchText: string) => {
+        const getProduct = async () => {
+            const { data } = await axios.get(`http://localhost:3001/products?name_like=${searchText}`);
+            setProducts(data);
+        };
+        getProduct();
+        // setProducts(productStore.filter((item: ProductType) => item.name.includes(searchText)));
+        setValue(searchText);
+    };
+
+    const signOut = () => {
+        dispatch(formSlice.actions.signout(""));
+    };
     return (
         <div className="tw-bg-red-500 tw-px-72 tw-py-1">
             <div className="tw-flex tw-justify-between tw-items-center">
                 <Logo className="logo">
-                    <img src={logo} alt="" className="img-fluid" />
+                    <Link to="/">
+                        <img src={logo} alt="" className="img-fluid" />
+                    </Link>
                 </Logo>
                 <form className="tw-flex tw-items-center tw-relative">
                     <div className="tw-absolute tw-left-2">
@@ -53,7 +70,6 @@ const Header = () => {
                         value={value}
                         options={options}
                         style={{ width: 400 }}
-                        onSelect={onSelect}
                         onSearch={onSearch}
                         onChange={onChange}
                         placeholder=""
@@ -90,10 +106,7 @@ const Header = () => {
                             borderRadius: "10px",
                             padding: "0 1em",
                         }}
-                        onClick={() => {
-                            dispatch(formSlice.actions.signout);
-                            navigate("/");
-                        }}
+                        onClick={signOut}
                     >
                         SignOut
                     </button>
